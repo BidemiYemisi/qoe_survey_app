@@ -1,6 +1,8 @@
 function onPageLoad() {
     $(".allSection").hide();
     $(".firstTimeLoad").show();
+    $(".optionList").addClass("hidden")
+
     // add hidden class to form and button, will need to use thier classes
 }
 
@@ -48,37 +50,44 @@ function preventReload(formElementSelector, formButtonSelector) {
 
 function isHidden(el) {
     var style = window.getComputedStyle(el);
-    return ((style.display === 'none') || (style.visibility === 'hidden'))
+    // return ((style.display === 'none') || (style.visibility === 'hidden'))
+    return ((style.display === 'none'));
 }
 
 function videoFinishedPlaying() {
     // Get all elements on the page (change this to another DOM element if you want)
     var all = document.getElementsByTagName("section");
     var visible_video = "";
-    var played_all = false
 
 
     for (var i = 0, max = all.length; i < max; i++) {
         if (isHidden(all[i])) {
             //console.log(all[i])
-            console.log("hidden")
+            console.log("Element is hidden");
         } else {
-            console.log("visible " + all[i].querySelector("video"))
-            visible_video = all[i].querySelector("video")
-            console.log("inside return " + visible_video)
+            console.log("Element is visible");
+
+            var hidden_section_part = all[i].querySelectorAll(".hidden");
+            var hidden_section_part_length = hidden_section_part.length -1;
+            var visible_video = all[i].querySelector("video");
+            //console.log("inside return " + visible_video)
 
             visible_video.onended = function () {
-            console.log("inside onended")
-            console.log(visible_video)
-            if (this.played.end(0) - this.played.start(0) === this.duration) {
-                console.log("Played all");
-                played_all = true
-                console.log(played_all);
-            } else {
-                console.log("Some parts were skipped");
+                console.log("inside onended");
+                console.log(visible_video);
+                console.log(hidden_section_part);
+                console.log(hidden_section_part_length);
+                if (this.played.end(0) - this.played.start(0) === this.duration) {
+                    console.log("Played all");
+                    for(var i = 0; i <= hidden_section_part_length; i++){
+                         hidden_section_part[i].classList.remove("hidden");
+                    }
+                } else {
+                    console.log("Some parts were skipped");
+                }
             }
-        }
-            return played_all;
+            //console.log(played_all);
+            return;
         }
         // console.log("outside onended" + visible_video)
         // visible_video.onended = function () {
@@ -132,12 +141,15 @@ $(document).ready(function () {
     onPageLoad();
     $(".allSection button.next_button").click(function () {
         $(".allSection").hide();
-
         if ($(this).closest("section.allSection").is(':last-child'))
             $('.firstTimeLoad').show();
         else
             $(this).closest("section.allSection").next().show().animate({opacity: 1.0}, "fast");
-        videoFinishedPlaying()  //if it returns true, get form and next button and make them visible
+            videoFinishedPlaying();
+            //console.log("insdie click " + result)
+            // if(videoFinishedPlaying()){
+            //      $(".optionList").addClass("shown")
+            // }  //if it returns true, get form and next button and make them visible
 
     });
 
@@ -154,16 +166,16 @@ $(document).ready(function () {
             var count = 0;
             $.each(names, function () { // then count them
                 count++;
-                console.log(count)
+                console.log(count);
             });
 
             if ($("section.allSection:visible").find("input[type='radio']:checked").length == count) {
 
                 // all questions answered
-                var button_in_section = $("section.allSection:visible").find("button")
-                $("section.allSection:visible").find("button").removeAttr("disabled")
+                var button_in_section = $("section.allSection:visible").find("button");
+                $("section.allSection:visible").find("button").removeAttr("disabled");
             } else {
-                console.log("not here")
+                console.log("not here");
             }
         }
     });
