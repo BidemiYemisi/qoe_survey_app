@@ -84,6 +84,8 @@ venv.bak/
 
 # static video #
 video_qoe_project/static/video
+video_qoe_project/assets/video
+
 
 
 
