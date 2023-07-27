@@ -1,0 +1,27 @@
+{% extends 'partials/main.html' %}
+
+{% block title %} QoE Subjective Video Survey {% endblock %}
+{% block content %}
+<div class="container pt-3">
+    <div class="row bg-light">
+        <div class="jumbotron pt-5">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <h1 class="display-5 text-center">Video QoE Subjective Survey</h1>
+                <p class="lead pt-2">Thanks for agreeing to take part in this survey. The aim of this survey is to measure your perception of the overall quality of the videos
+                    that
+                    will be
+                    shown to you.
+                    So pick a rating that accurately reflect how you felt about the sound and image quality of the
+                    videos that will be shown to you.
+                    The survey only takes about 10 mins to complete.</p>
+                <hr class="my-4">
+                <em>Before you begin, you will be asked to complete a very short questionaire (with two
+                    questions) about yourself. Please click next when you are ready to start.</em>
+                <div class="text-end pt-4 mb-3">
+                   <a href = "{% url 'questionnaire' %}"><button type="button" class="btn btn-primary">Next</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

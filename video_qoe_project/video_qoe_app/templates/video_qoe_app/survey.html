@@ -1,0 +1,201 @@
+{% extends 'partials/main.html' %}
+{% load bootstrap_icons %}
+{% load static %}
+
+{% block title %} Survey {% endblock %}
+{% block content %}
+
+{% if error_message %}
+    <div class="alert alert-danger text-center">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+<div class="container pt-3" id="survey_form">
+
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Take the Survey</h3>
+                </div>
+
+                <form action="/survey/" method="POST" id="surveyForm">
+                    {% csrf_token %}
+
+                    <section class="allSection firstTimeLoad">
+                        <h3 class="display-5 text-center">Important Information about the Survey</h3>
+                        <p class="lead pt-2 text-center">
+                            You will be shown six main types of videos with varying levels of degradation.
+                            On the survey page, the videos will not autoplay, so you will need to click the play
+                            button to play each video. The use of headphone while taking the survey is preferred but not required. Please click next to start the survey.
+                        </p>
+
+                        <div class="text-center pb-3 pt-3">
+
+                            <button class="btn btn-primary next_button" type="button">Next</button>
+                        </div>
+                    </section>
+                    {% for key, value in playlist.items %}
+                    {% with key|stringformat:"s" as video_id %}
+                    {% with "qoe_rating_one_"|add:video_id as name_one %}
+                    {% with "qoe_rating_two_"|add:video_id as name_two %}
+                    {% with "section_"|add:video_id as section_id %}
+                    {% with "veryAnnoying_"|add:video_id as veryAnnoying_id %}
+                    {% with "annoying_"|add:video_id as annoying_id %}
+                    {% with "perceptibleButNotAnnoying_"|add:video_id as perceptibleButNotAnnoying_id %}
+                    {% with "imperceptible_"|add:video_id as imperceptible_id %}
+                    {% with "oneRating_"|add:video_id as oneRating_id %}
+                    {% with "twoRating_"|add:video_id as twoRating_id %}
+                    {% with "threeRating_"|add:video_id as threeRating_id %}
+                    {% with "fourRating_"|add:video_id as fourRating_id %}
+                    {% with "fiveRating_"|add:video_id as fiveRating_id %}
+                    <section class="allSection" id="{{section_id}}">
+
+                        <div class="flex-row d-flex justify-content-center">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <video id="{{key}}" class="embed-responsive-item" controls preload=auto>
+                                    <source src="{% static value %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                        <div class="card-body pb-4">
+                            <p class="text-center pt-5 h5"><strong>How annoyed are you with the impairment on the
+                                overall
+                                quality of
+                                the video?</strong></p>
+                            <div class="flex-row d-flex justify-content-center pb-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_one}}"
+                                           id="{{veryAnnoying_id}}"
+                                           value="veryAnnoying" required>
+                                    <label class="form-check-label" for="{{veryAnnoying_id}}">Very annoying</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_one}}"
+                                           id="{{annoying_id}}"
+                                           value="annoying">
+                                    <label class="form-check-label" for="{{annoying_id}}">Annoying</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_one}}"
+                                           id="{{perceptibleButNotAnnoying_id}}"
+                                           value="perceptibleButNotAnnoying">
+                                    <label class="form-check-label" for="{{perceptibleButNotAnnoying_id}}">Perceptible, but
+                                        not
+                                        annoying</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_one}}"
+                                           id="{{imperceptible_id}}" value="imperceptible">
+                                    <label class="form-check-label" for="{{imperceptible_id}}">Imperceptible</label>
+                                </div>
+                            </div>
+                            <p class="text-center h5"><strong>How will you rate the overall quality of the
+                                video?</strong>
+                            </p>
+                            <div class="flex-row d-flex justify-content-center pb-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_two}}" id="{{oneRating_id}}"
+                                           value="1" required>
+                                    <label class="form-check-label" for="{{oneRating_id}}">1 Rating</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_two}}" id="{{twoRating_id}}"
+                                           value="2">
+                                    <label class="form-check-label" for="{{twoRating_id}}">2 Rating</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_two}}"
+                                           id="{{threeRating_id}}"
+                                           value="3">
+                                    <label class="form-check-label" for="{{threeRating_id}}">3 Rating</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_two}}"
+                                           id="{{fourRating_id}}" value="4">
+                                    <label class="form-check-label" for="{{fourRating_id}}">4 Rating</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input hideable" type="radio" name="{{name_two}}"
+                                           id="{{fiveRating_id}}" value="5">
+                                    <label class="form-check-label" for="{{fiveRating_id}}">5 Rating</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center pb-3 pt-3">
+                            <button class="btn btn-primary next_button text-end pl-3" type="button" disabled>Next
+                            </button>
+                        </div>
+                    </section>
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endfor %}
+                    <section class="allSection" id="val_section">
+                        <div class="flex-row d-flex justify-content-center">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <video id="val_video" class="embed-responsive-item" controls preload=auto>
+                                    <source src="{% static validation_video %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                        <p class="text-center h5 pt-5"><strong>What animal sound did you hear while the video was
+                            playing?</strong>
+                        </p>
+                        <div class="flex-row d-flex justify-content-center pb-5">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input hideable" type="radio" name="validation_question"
+                                       id="cow"
+                                       value="cow">
+                                <label class="form-check-label" for="cow">Cow</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input hideable" type="radio" name="validation_question"
+                                       id="monkey"
+                                       value="monkey">
+                                <label class="form-check-label" for="monkey">Monkey</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input hideable" type="radio" name="validation_question"
+                                       id="cat"
+                                       value="cat">
+                                <label class="form-check-label" for="cat">Cat</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input hideable" type="radio" name="validation_question"
+                                       id="dog" value="dog">
+                                <label class="form-check-label" for="dog">Dog</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input hideable" type="radio" name="validation_question"
+                                       id="lion" value="lion">
+                                <label class="form-check-label" for="lion">Lion</label>
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-end">
+                            <!--                            <button type="button" class="btn btn-primary me-4">Back</button>-->
+                            <button type="submit" name="submit_rating" value="next" form="surveyForm" id="survey_submit_button"
+                                    class="btn btn-primary">Submit Ratings
+                            </button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
