@@ -1,5 +1,4 @@
 {% extends 'partials/main.html' %}
-{% load bootstrap_icons %}
 {% load static %}
 
 {% block title %} Survey {% endblock %}
@@ -55,7 +54,7 @@
 
                         <div class="flex-row d-flex justify-content-center">
                             <div class="embed-responsive embed-responsive-4by3">
-                                <video id="{{key}}" class="embed-responsive-item" controls preload=auto>
+                                <video id="{{key}}" class="embed-responsive-item" poster="{% static 'image/play_480x360.jpg' %}" controls preload=auto>
                                     <source src="{% static value %}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -102,29 +101,29 @@
                                     <input class="form-check-input hideable" type="radio" name="{{name_two}}"
                                            id="{{oneRating_id}}"
                                            value="1" required>
-                                    <label class="form-check-label" for="{{oneRating_id}}">1 Rating</label>
+                                    <label class="form-check-label" for="{{oneRating_id}}">1 Star</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input hideable" type="radio" name="{{name_two}}"
                                            id="{{twoRating_id}}"
                                            value="2">
-                                    <label class="form-check-label" for="{{twoRating_id}}">2 Rating</label>
+                                    <label class="form-check-label" for="{{twoRating_id}}">2 Star</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input hideable" type="radio" name="{{name_two}}"
                                            id="{{threeRating_id}}"
                                            value="3">
-                                    <label class="form-check-label" for="{{threeRating_id}}">3 Rating</label>
+                                    <label class="form-check-label" for="{{threeRating_id}}">3 Star</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input hideable" type="radio" name="{{name_two}}"
                                            id="{{fourRating_id}}" value="4">
-                                    <label class="form-check-label" for="{{fourRating_id}}">4 Rating</label>
+                                    <label class="form-check-label" for="{{fourRating_id}}">4 Star</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input hideable" type="radio" name="{{name_two}}"
                                            id="{{fiveRating_id}}" value="5">
-                                    <label class="form-check-label" for="{{fiveRating_id}}">5 Rating</label>
+                                    <label class="form-check-label" for="{{fiveRating_id}}">5 Star</label>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +149,7 @@
                     <section class="allSection" id="val_section">
                         <div class="flex-row d-flex justify-content-center">
                             <div class="embed-responsive embed-responsive-4by3">
-                                <video id="val_video" class="embed-responsive-item" controls preload=auto>
+                                <video id="val_video" class="embed-responsive-item" poster="{% static 'image/play_480x360.jpg' %}" controls preload=auto>
                                     <source src="{% static validation_video %}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>

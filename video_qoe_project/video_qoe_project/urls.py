@@ -16,11 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from video_qoe_app.views import welcome_page
-from video_qoe_app.views import survey_page
-from video_qoe_app.views import test_page
-from video_qoe_app.views import validation_page
-from video_qoe_app.views import questionnaire_page
 from video_qoe_app import views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -29,9 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.welcome_page, name="welcome"),
     path('survey/', views.survey_page, name="survey"),
-    #path('survey/', views.fetch_videos_from_model),
-    path('test/<str:pk>/', views.test_page, name="test"),
-    path('validation/', views.validation_page, name="validation"),
+    path('bye/', views.bye_page, name="bye"),
     path('questionnaire/', views.questionnaire_page, name="questionnaire"),
     path('end/', views.end_page, name="end")
 

@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR/ "static"
+    BASE_DIR / "static"
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets') #(BASE_DIR/"assets/")
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 
 # Application definition
@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'video_qoe_app.apps.VideoQoeAppConfig',
     'bootstrap5',
-    'django_bootstrap_icons',
     'crispy_forms',
     'crispy_bootstrap5'
 ]

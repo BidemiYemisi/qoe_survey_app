@@ -1,11 +1,15 @@
 {% extends 'partials/main.html' %}
-{% load bootstrap_icons %}
 {% load static %}
 
 {% block title %} End {% endblock %}
 {% block content %}
 <div class=" h3 text-center pt-5">
     <p> Thanks for taking the survey </p>
+    <br>
+    <em>Will you like to help us rate more videos?</em>
+    <a href="{% url 'survey' %}" type="button" class="btn btn-primary">Yes, I will love to</a>
+    <a href="{% url 'bye' %}" type="button" class="btn btn-danger">No, I'm done.</a>
+
 </div>
 {% endblock %}
 

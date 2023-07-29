@@ -1,5 +1,4 @@
 {% extends 'partials/main.html' %}
-{% load bootstrap_icons %}
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -29,64 +28,7 @@
                 {% csrf_token %}
                 <p class="fw-bold">Please select your age range and gender below?</p>
                     {{form|crispy}}
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample1"/>-->
-<!--                    <label class="form-check-label" for="radioExample1">-->
-<!--                        Below 18-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample1"/>-->
-<!--                    <label class="form-check-label" for="radioExample1">-->
-<!--                        18 to 24-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample1"/>-->
-<!--                    <label class="form-check-label" for="radioExample1">-->
-<!--                        25 to 34-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample2"/>-->
-<!--                    <label class="form-check-label" for="radioExample2">-->
-<!--                        35 to 44-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample3"/>-->
-<!--                    <label class="form-check-label" for="radioExample3">-->
-<!--                        45 to 54-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample3"/>-->
-<!--                    <label class="form-check-label" for="radioExample3">-->
-<!--                        55 to 64-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check mb-2">-->
-<!--                    <input class="form-check-input" type="radio" name="exampleForm" id="radioExample3"/>-->
-<!--                    <label class="form-check-label" for="radioExample3">-->
-<!--                        65 or over-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <strong>Gender</strong>-->
-<!--                <div class="flex-row d-flex mx-3">-->
-<!--                    <div class="form-check form-check-inline">-->
-<!--                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"-->
-<!--                               value="option1"/>-->
-<!--                        <label class="form-check-label" for="inlineRadio1">Male</label>-->
-<!--                    </div>-->
-
-<!--                    <div class="form-check form-check-inline">-->
-<!--                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"-->
-<!--                               value="option2"/>-->
-<!--                        <label class="form-check-label" for="inlineRadio2">Female</label>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div class="text-end pt-4 mb-3">
-<!--                    <a href = "{% url 'survey' %}"><button type="button" class="btn btn-primary">Next</button></a>-->
                     <button type="submit" class="btn btn-primary" value="next" form="questionnaireForm" name="" id="questionnaire_submit_button"> Next </button>
 
                 </div>

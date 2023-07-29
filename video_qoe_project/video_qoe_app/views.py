@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from .models import QoeVideo, Respondent, QoeRating, ValidationVideo
 from .forms import CreateQuestionnaireForm
 import random
-import itertools
 
 # Define GLOBAL variables
 respondent_id = 0
@@ -16,6 +15,47 @@ validation_video = ""
 def welcome_page(request):
     return render(request, 'video_qoe_app/welcome.html')  # specify template name
 
+def questionnaire_page(request):
+    global respondent_id
+    form = CreateQuestionnaireForm(request.POST or None)
+    if request.method == "POST":
+        # print(request.POST)
+        # create a form instance and populate it with data from the request:
+        # form = CreateQuestionnaireForm(request.POST)
+        # check whether it's valid:
+        # process the data in form.cleaned_data as required
+        # ...
+        # redirect to a new URL:
+        if form.is_valid():
+            respondent_age_range = form.cleaned_data['age_range']  # pass cleaned values from form to a variable
+            respondent_gender = form.cleaned_data['gender']
+            create_respondent = Respondent(age_range=respondent_age_range, gender=respondent_gender)
+            create_respondent.save()
+
+            # Try to get ID of newly saved respondent
+            try:
+                respondent_id = create_respondent.respondent_id
+                request.session["respondent_id"] = respondent_id
+            except create_respondent.DoesNotExist:
+                respondent_id = None
+            print(respondent_id)
+
+            if respondent_id is not None and request.session.has_key("respondent_id"):
+                # fetch id of respondent and pass to next page
+                # respondant_details = Respondent.objects.all()
+                # messages.success(request, 'respondent with id  {}  added.'.format(create_respondent.respondent_id))
+                # return redirect("questionnaire")
+                return redirect("survey")
+            else:
+                form = CreateQuestionnaireForm()
+                context = {'form': form}
+                return render(request, 'video_qoe_app/questionnaire.html', context)
+
+        # if a GET (or any other method) we'll create a blank form
+    # else:
+    #     form = CreateQuestionnaireForm()
+    #     context = {'form': form}
+    return render(request, 'video_qoe_app/questionnaire.html', {"form": form})
 
 def get_random_videos_id_from_model():
     random_video_id = random.sample(range(2, 7), 4)  # range(2, 7), 4
@@ -116,64 +156,16 @@ def survey_page(request):
         # 'error_message': error_message}
         return render(request, 'video_qoe_app/survey.html', context)
 
+def bye_page(request):
+    return render(request, 'video_qoe_app/bye.html')
 
-def test_page(request, pk):
-    # video = None
-    # for i in videos:
-    #    if i['id'] == int(pk):
-    #       video = i
-    video = QoeVideo.objects.get(video_id=pk)
-    context = {'video': video}
-    return render(request, 'video_qoe_app/test.html', context)
+def end_page(request):
 
+    # session id here to get respondent id and redirect user to survey page, exclude questionnaire page because we already have respondent id
+    return render(request, 'video_qoe_app/end.html')
 
-def validation_page(request):
-    return render(request, 'video_qoe_app/validation.html')
-
-
-def questionnaire_page(request):
-    global respondent_id
-    form = CreateQuestionnaireForm(request.POST or None)
-    if request.method == "POST":
-        # print(request.POST)
-        # create a form instance and populate it with data from the request:
-        # form = CreateQuestionnaireForm(request.POST)
-        # check whether it's valid:
-        # process the data in form.cleaned_data as required
-        # ...
-        # redirect to a new URL:
-        if form.is_valid():
-            respondent_age_range = form.cleaned_data['age_range']  # pass cleaned values from form to a variable
-            respondent_gender = form.cleaned_data['gender']
-            create_respondent = Respondent(age_range=respondent_age_range, gender=respondent_gender)
-            create_respondent.save()
-
-            # Try to get ID of newly saved respondent
-            try:
-                respondent_id = create_respondent.respondent_id
-            except create_respondent.DoesNotExist:
-                respondent_id = None
-            print(respondent_id)
-
-            if respondent_id != None:
-                # fetch id of respondent and pass to next page
-                # respondant_details = Respondent.objects.all()
-                # messages.success(request, 'respondent with id  {}  added.'.format(create_respondent.respondent_id))
-                # return redirect("questionnaire")
-                return redirect("survey")
-            else:
-                form = CreateQuestionnaireForm()
-                context = {'form': form}
-                return render(request, 'video_qoe_app/questionnaire.html', context)
-
-        # if a GET (or any other method) we'll create a blank form
-    # else:
-    #     form = CreateQuestionnaireForm()
-    #     context = {'form': form}
-    return render(request, 'video_qoe_app/questionnaire.html', {"form": form})
 
 
 # https://stackoverflow.com/questions/22976662/return-primary-key-after-saving-to-a-model-in-django
 
-def end_page(request):
-    return render(request, 'video_qoe_app/end.html')
+
