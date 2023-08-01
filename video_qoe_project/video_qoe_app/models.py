@@ -44,6 +44,8 @@ class QoeRating(models.Model):
         primary_key=True)  # The composite primary key (qoe_rating_id, video_id, respondent_id) found, that is not supported. The first column is selected.
     qoe_rating_value = models.IntegerField()
     qoe_rating_perception = models.CharField(max_length=300)
+    validation_video_path = models.CharField(max_length=300)
+    respondent_validation_video_anwer = models.CharField(max_length=300)
     video = models.ForeignKey('QoeVideo', on_delete=models.CASCADE)
     respondent = models.ForeignKey('Respondent', on_delete=models.CASCADE) #, related_name='respondent'
 

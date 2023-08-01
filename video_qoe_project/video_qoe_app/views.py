@@ -38,9 +38,9 @@ def questionnaire_page(request):
                 request.session["respondent_id"] = respondent_id
             except create_respondent.DoesNotExist:
                 respondent_id = None
-            print(respondent_id)
+            print("This is resp ID", respondent_id)
 
-            if respondent_id is not None and request.session.has_key("respondent_id"):
+            if respondent_id is not None and "respondent_id" in request.session:
                 # fetch id of respondent and pass to next page
                 # respondant_details = Respondent.objects.all()
                 # messages.success(request, 'respondent with id  {}  added.'.format(create_respondent.respondent_id))
@@ -58,7 +58,7 @@ def questionnaire_page(request):
     return render(request, 'video_qoe_app/questionnaire.html', {"form": form})
 
 def get_random_videos_id_from_model():
-    random_video_id = random.sample(range(2, 7), 4)  # range(2, 7), 4
+    random_video_id = random.sample(range(1, 3), 2)  # range(2, 7), 4 //range(1,3) means create numbers from 1 to 2, 3 won't be included
     return random_video_id
 
 
@@ -106,12 +106,12 @@ def survey_page(request):
     global validation_video
     error_message = ""
     try:
-        respondent_details = Respondent.objects.get(respondent_id=respondent_id)
+        respondent_details = Respondent.objects.get(respondent_id=respondent_id)  ##need to look at respondent_details, maybe declare the variable
     except Respondent.DoesNotExist:
-        respondent_details = None
+        #respondent_details = None
         error_message = "You need to go to home page to start the survey. Please copy this url http://127.0.0.1:8000 and paste in your browser"
-        print(respondent_id)
-        # print(respondent_details)
+        print("inside try catch in survey_page", respondent_id)
+        #print(respondent_details)
         return redirect("welcome")
 
     if request.method == 'POST':
@@ -122,34 +122,32 @@ def survey_page(request):
                     new_rated_video = QoeVideo.objects.get(video_id=key)
                 except QoeVideo.DoesNotExist:
                     new_rated_video = None
-                    print(new_rated_video)
+                    print("Video should be empty", new_rated_video)
 
                 new_rating_perception = request.POST.get('qoe_rating_one_' + str(key))
                 new_rating_value = request.POST.get('qoe_rating_two_' + str(key))
-                # new_validation_video_resp = request.POST.get('validation_question')
+                new_validation_video_resp = request.POST.get('validation_question')
 
-                # if new_rated_video is not None and new_rating_perception is not None and new_rating_value is not None \
-                #     and new_validation_video_resp is not None:
-                #     respondent_details.qoerating_set.create(qoe_rating_value=new_rating_value,
-                #                                             qoe_rating_perception=new_rating_perception,
-                #                                             video=new_rated_video,
-                #                                             validation_video_resp=new_validation_video_resp,
-                #                                             validation_video_name=validation_video)
-                if new_rated_video is not None and new_rating_perception is not None and new_rating_value is not None:
-                    respondent_details.qoerating_set.create(qoe_rating_value=new_rating_value,
-                                                            qoe_rating_perception=new_rating_perception,
-                                                            video=new_rated_video)
-                    return redirect("end")
-
-                else:
+                if new_rated_video is None or new_rating_perception is None or new_rating_value is None or new_validation_video_resp is None:
                     error_message = "Not all questions were answered or missing videos. Please go to home page and retake survey"
                     return render(request, 'video_qoe_app/survey.html', {"error_message": error_message})
+                # if new_rated_video is not None and new_rating_perception is not None and new_rating_value is not None:
+                #     respondent_details.qoerating_set.create(qoe_rating_value=new_rating_value,
+                #                                             qoe_rating_perception=new_rating_perception,
+                #                                             video=new_rated_video)
+                    #return redirect("end")
 
+                else:
+                    respondent_details.qoerating_set.create(qoe_rating_value=new_rating_value,
+                                                            qoe_rating_perception=new_rating_perception,
+                                                            video=new_rated_video,
+                                                            respondent_validation_video_anwer=new_validation_video_resp,
+                                                            validation_video_path=validation_video)
+        return redirect("end")
     else:
         playlist = fetch_videos_from_model()  ##looks like I need to handle the playing of video some else and pass it here
         validation_video = fetch_validation_videos()
-        print(
-            playlist)  # get the key of playlist dict and passs it to qoe_rating_one and two keys, also use the key to get the video obj
+        print(playlist)  # get the key of playlist dict and passs it to qoe_rating_one and two keys, also use the key to get the video obj
         print(validation_video)
         context = {'playlist': playlist,
                    'validation_video': validation_video}
@@ -160,8 +158,23 @@ def bye_page(request):
     return render(request, 'video_qoe_app/bye.html')
 
 def end_page(request):
-
-    # session id here to get respondent id and redirect user to survey page, exclude questionnaire page because we already have respondent id
+    global respondent_id
+    current_respondent_id = request.session.get("respondent_id")
+    print("inside end_page", current_respondent_id)
+    if request.POST.get("more_rating"):
+        rate_more_response = request.POST.get("more_rating")
+        if rate_more_response == "Yes":
+            respondent_id = request.session["respondent_id"]
+            print("respondent_id inside end with Yes response", respondent_id)
+            return redirect("survey")
+        else:
+            try:
+                print("Inside Try end_page", request.session["respondent_id"])
+                del request.session["respondent_id"]
+            except KeyError:
+                print("Before Pass in end_page", request.session["respondent_id"])
+                pass
+            return redirect("bye")
     return render(request, 'video_qoe_app/end.html')
 
 

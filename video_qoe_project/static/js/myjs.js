@@ -184,9 +184,12 @@ $(document).ready(function () {
     survey_form_id = "survey_form"
     questionnaire_button_id = "questionnaire_submit_button"
     survey_button_id = "survey_submit_button"
+    endForm_class = "endForm_class"
+    endForm_id = "endForm_id"
 
     preventReload(questionnaire_form_id, questionnaire_button_id);
     preventReload(survey_form_id, survey_button_id);
+    preventReload(endForm_id, endForm_class);
 
 
 });
