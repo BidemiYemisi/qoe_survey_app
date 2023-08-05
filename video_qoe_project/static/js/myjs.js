@@ -2,8 +2,6 @@ function onPageLoad() {
     $(".allSection").hide();
     $(".firstTimeLoad").show();
     $(".optionList").addClass("hidden")
-
-    // add hidden class to form and button, will need to use thier classes
 }
 
 function preventReload(formElementSelector, formButtonSelector) {
@@ -24,28 +22,6 @@ function preventReload(formElementSelector, formButtonSelector) {
         }
     });
 }
-
-// In Pure JS
-// function videoFinishedPlaying(el) {
-//      console.log("Inside videoFinishedPlaying function");
-//     const videoList = document.querySelectorAll(el); // ".allSection video" use only video when calling this fum=nction for it to work
-//     for (let i = 0; i < videoList.length; i++) {
-//         //if (!!(element.offsetWidth || element.offsetHeight || element.getClientRects().length)) {
-//           //return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
-//         if ( $(el).css('display') != 'none' || $(el).css("visibility") != "hidden"){
-//             console.log("visible")
-//             document.querySelector(el).onended = function () {
-//                 if (this.played.end(0) - this.played.start(0) === this.duration) {
-//                     console.log("Played all");
-//                 } else {
-//                     console.log("Some parts were skipped");
-//                 }
-//             }
-//         }
-//
-//     }
-//
-// }
 
 
 function isHidden(el) {
@@ -89,52 +65,8 @@ function videoFinishedPlaying() {
             //console.log(played_all);
             return;
         }
-        // console.log("outside onended" + visible_video)
-        // visible_video.onended = function () {
-        //     console.log("inside onended")
-        //     if (this.played.end(0) - this.played.start(0) === this.duration) {
-        //         console.log("Played all");
-        //     } else {
-        //         console.log("Some parts were skipped");
-        //     }
-        // }
-
-        //console.log(all[i])
-        // console.log(i)
-
-        // document.querySelector("video").onended = function () {
-        //     if (this.played.end(0) - this.played.start(0) === this.duration) {
-        //         console.log("Played all");
-        //     } else {
-        //         console.log("Some parts were skipped");
-        //     }
-        // }
     }
-
-    // const videoList = document.querySelectorAll(el); // ".allSection video"
-    // for (let i = 0; i < videoList.length; i++) {
-    //     //if (!!(element.offsetWidth || element.offsetHeight || element.getClientRects().length)) {
-    //       //return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
-    //     if ( $(el).css('display') != 'none' || $(el).css("visibility") != "hidden"){
-    //         console.log("visible")
-    //         document.querySelector(el).onended = function () {
-    //             if (this.played.end(0) - this.played.start(0) === this.duration) {
-    //                 console.log("Played all");
-    //             } else {
-    //                 console.log("Some parts were skipped");
-    //             }
-    //         }
-    //     }
-    //
-    // }
-
 }
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     //let elem = document.querySelector(".allSection video");
-//     videoFinishedPlaying("video")
-// });
 
 
 $(document).ready(function () {
@@ -146,11 +78,6 @@ $(document).ready(function () {
         else
             $(this).closest("section.allSection").next().show().animate({opacity: 1.0}, "fast");
             videoFinishedPlaying();
-            //console.log("insdie click " + result)
-            // if(videoFinishedPlaying()){
-            //      $(".optionList").addClass("shown")
-            // }  //if it returns true, get form and next button and make them visible
-
     });
 
     $("section.allSection").find("input[type='radio']").change(function () {
@@ -190,7 +117,5 @@ $(document).ready(function () {
     preventReload(questionnaire_form_id, questionnaire_button_id);
     preventReload(survey_form_id, survey_button_id);
     preventReload(endForm_id, endForm_class);
-
-
 });
 

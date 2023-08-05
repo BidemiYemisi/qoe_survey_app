@@ -7,8 +7,6 @@
     <p> Thanks for taking the survey </p>
     <br>
     <em>Will you like to help us rate more videos?</em>
-<!--    <a href="{% url 'survey' %}" type="button" class="btn btn-primary">Yes, I will love to</a>-->
-<!--    <a href="{% url 'bye' %}" type="button" class="btn btn-danger">No, I'm done.</a>-->
     <form action="/end/" method="POST" id="endForm_id">
          {% csrf_token %}
         <button type="submit" name="more_rating" class="btn btn-primary endForm_class" form="endForm_id" value="Yes">Yes, I will love to</button>

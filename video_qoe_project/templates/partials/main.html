@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'image/favicon-32x32.png' %}"/>
     <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
     <script type="text/javascript" src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'js/myjs.js' %}"></script>
@@ -23,7 +23,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg bg-success text-uppercase navbar-static-top">
     <div class="container">
-        <p class="navbar-brand text-white pb-0">Video QoE Subjective Survey</p>
+        <a href="{% url 'welcome' %}" class="navbar-brand text-white pb-0">Video QoE Subjective Survey</a>
     </div>
 </nav>
 {% block content %}
@@ -33,7 +33,7 @@
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2023 Copyright:
-        <a class="text-dark" href="#">Video QoE Subjective Survey</a>
+        <a class="text-dark" href="{% url 'welcome' %}">Video QoE Subjective Survey</a>
     </div>
     <!-- Copyright -->
 </footer>

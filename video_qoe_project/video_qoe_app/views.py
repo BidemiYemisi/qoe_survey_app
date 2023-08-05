@@ -1,5 +1,3 @@
-from django.contrib import messages
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import QoeVideo, Respondent, QoeRating, ValidationVideo
 from .forms import CreateQuestionnaireForm
@@ -19,13 +17,6 @@ def questionnaire_page(request):
     global respondent_id
     form = CreateQuestionnaireForm(request.POST or None)
     if request.method == "POST":
-        # print(request.POST)
-        # create a form instance and populate it with data from the request:
-        # form = CreateQuestionnaireForm(request.POST)
-        # check whether it's valid:
-        # process the data in form.cleaned_data as required
-        # ...
-        # redirect to a new URL:
         if form.is_valid():
             respondent_age_range = form.cleaned_data['age_range']  # pass cleaned values from form to a variable
             respondent_gender = form.cleaned_data['gender']
@@ -41,24 +32,15 @@ def questionnaire_page(request):
             print("This is resp ID", respondent_id)
 
             if respondent_id is not None and "respondent_id" in request.session:
-                # fetch id of respondent and pass to next page
-                # respondant_details = Respondent.objects.all()
-                # messages.success(request, 'respondent with id  {}  added.'.format(create_respondent.respondent_id))
-                # return redirect("questionnaire")
                 return redirect("survey")
             else:
                 form = CreateQuestionnaireForm()
                 context = {'form': form}
                 return render(request, 'video_qoe_app/questionnaire.html', context)
-
-        # if a GET (or any other method) we'll create a blank form
-    # else:
-    #     form = CreateQuestionnaireForm()
-    #     context = {'form': form}
     return render(request, 'video_qoe_app/questionnaire.html', {"form": form})
 
 def get_random_videos_id_from_model():
-    random_video_id = random.sample(range(1, 3), 2)  # range(2, 7), 4 //range(1,3) means create numbers from 1 to 2, 3 won't be included
+    random_video_id = random.sample(range(3, 158), 9)  # range(2, 7), 4 //range(1,3) means create numbers from 1 to 2, 3 won't be included
     return random_video_id
 
 
@@ -104,12 +86,9 @@ def fetch_validation_videos():
 def survey_page(request):
     global playlist
     global validation_video
-    error_message = ""
     try:
         respondent_details = Respondent.objects.get(respondent_id=respondent_id)  ##need to look at respondent_details, maybe declare the variable
     except Respondent.DoesNotExist:
-        #respondent_details = None
-        error_message = "You need to go to home page to start the survey. Please copy this url http://127.0.0.1:8000 and paste in your browser"
         print("inside try catch in survey_page", respondent_id)
         #print(respondent_details)
         return redirect("welcome")
@@ -129,14 +108,8 @@ def survey_page(request):
                 new_validation_video_resp = request.POST.get('validation_question')
 
                 if new_rated_video is None or new_rating_perception is None or new_rating_value is None or new_validation_video_resp is None:
-                    error_message = "Not all questions were answered or missing videos. Please go to home page and retake survey"
+                    error_message = "Not all questions were answered or missing videos. Please go to home page by clicking on VIDEO QOE SUBJECTIVE SURVEY in navigation bar above and retake survey"
                     return render(request, 'video_qoe_app/survey.html', {"error_message": error_message})
-                # if new_rated_video is not None and new_rating_perception is not None and new_rating_value is not None:
-                #     respondent_details.qoerating_set.create(qoe_rating_value=new_rating_value,
-                #                                             qoe_rating_perception=new_rating_perception,
-                #                                             video=new_rated_video)
-                    #return redirect("end")
-
                 else:
                     respondent_details.qoerating_set.create(qoe_rating_value=new_rating_value,
                                                             qoe_rating_perception=new_rating_perception,
