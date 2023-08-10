@@ -40,7 +40,7 @@ def questionnaire_page(request):
     return render(request, 'video_qoe_app/questionnaire.html', {"form": form})
 
 def get_random_videos_id_from_model():
-    random_video_id = random.sample(range(3, 158), 9)  # range(2, 7), 4 //range(1,3) means create numbers from 1 to 2, 3 won't be included
+    random_video_id = random.sample(range(3, 221), 9)  # range(2, 7), 4 //range(1,3) means create numbers from 1 to 2, 3 won't be included
     return random_video_id
 
 
