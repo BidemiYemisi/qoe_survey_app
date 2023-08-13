@@ -83,10 +83,10 @@ env.bak/
 venv.bak/ 
 
 # static video #
-video_qoe_project/static/video
-video_qoe_project/assets/video
-video_qoe_project/assets/image
-video_qoe_project/static/image
+#video_qoe_project/static/video
+#video_qoe_project/assets/video
+#video_qoe_project/assets/image
+#video_qoe_project/static/image
 
 
 
